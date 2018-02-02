@@ -652,8 +652,8 @@ ggplot(fly_sub_lineup,
   xlab("Is it rude to bring a baby on board?") +
   geom_bar(position="fill") + coord_flip() +
   scale_fill_manual("", 
-                    values=c(ochre_palettes$lorikeet[1],
-                          ochre_palettes$lorikeet[2])) +
+                    values=c(ochre_palettes$lorikeet[2],
+                          ochre_palettes$lorikeet[1])) +
   facet_wrap(~.sample, ncol=4)
 ```
 
@@ -673,7 +673,7 @@ placed the galaxies in the clusters exactly as prescribed by the
 model, would the resulting picture on the photographic plate look
 anything like that on an actual plate...?"]
 
-.footnote[The hard work was of course done by .orange[Computers], consisting of an office with three female assistants whose work was acknowledged as requiring ``a tremendous amount of care and attention.]
+.footnote[The hard work was of course done by .orange[Computers], consisting of an office with three female assistants whose work was acknowledged as requiring a tremendous amount of care and attention.]
 ---
 
 # p-values 
@@ -816,7 +816,7 @@ But equally important, the interactive graphics system was built on a .orange[da
 # Summary
     
 - The grammar of graphics provides the functional mapping of variable to plot element that makes data plots become statistics that we can do inference on
-    - Visual inference protocol gives some teeth to the discoveries 
+    - Visual inference protocol gives some "teeth" to the discoveries 
     - ... and helps to avoid apophenia
     - Prevents *p*-hacking and supports practical significance
 - Think about interactive graphics and inference procedures as part of the data pipeline
@@ -830,7 +830,7 @@ class: inverse
 - Inference: Andreas Buja, Heike Hofmann, Mahbub Majumder, Hadley Wickham, Eric Hare, Susan Vanderplas, Niladri Roy Chowdhury, Nat Tomasetti.
 - Interactive graphics: Debby Swayne, Andreas Buja, Duncan Temple Lang, Heike Hofmann, Michael Lawrence, Hadley Wickham, Yihui Xie, Xiaoyue Cheng.
 
-Contact: [`r icon::fa_envelope()`]() dicook@monash.edu, [`r icon::fa_twitter()`]() visnut, [`r icon::fa_github()`]() dicook
+Contact: [`r icon::fa_envelope()`](http://www.dicook.org) dicook@monash.edu, [`r icon::fa_twitter()`](https://twitter.com/visnut) visnut, [`r icon::fa_github()`](https://github.com/dicook) dicook
 
 .footnote[Slides made with Rmarkdown, xaringan package by Yihui Xie, and lorikeet theme using the [ochRe package](https://github.com/ropenscilabs/ochRe). Available at [github.com/dicook/RStudio-keynote](github.com/dicook/RStudio-keynote].)
 
