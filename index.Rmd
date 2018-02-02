@@ -706,8 +706,8 @@ ggplot(fly_sub_lineup,
   xlab("Is it rude to bring a baby on board?") +
   geom_bar(position="fill") + coord_flip() +
   scale_fill_manual("", 
-                    values=c(ochre_palettes$lorikeet[1],
-                          ochre_palettes$lorikeet[2])) +
+                    values=c(ochre_palettes$lorikeet[2],
+                          ochre_palettes$lorikeet[1])) +
   facet_wrap(~.sample, ncol=4)
 ```
 ]
@@ -736,8 +736,8 @@ ggplot(fly_sub_lineup,
   xlab("Is it rude to bring a baby on board?") +
   geom_bar(position="fill") + coord_flip() +
   scale_fill_manual("", 
-                    values=c(ochre_palettes$lorikeet[1],
-                          ochre_palettes$lorikeet[2])) +
+                    values=c(ochre_palettes$lorikeet[2],
+                          ochre_palettes$lorikeet[1])) +
   facet_wrap(~.sample, ncol=4)
 ```
 ]
@@ -748,8 +748,8 @@ ggplot(fly_sub_lineup,
   xlab("Is it rude to bring a baby on board?") +
   geom_bar() + coord_flip() +
   scale_fill_manual("", 
-                    values=c(ochre_palettes$lorikeet[1],
-                          ochre_palettes$lorikeet[2])) +
+                    values=c(ochre_palettes$lorikeet[2],
+                          ochre_palettes$lorikeet[1])) +
   facet_wrap(~.sample, ncol=4) 
 ```
 ]
