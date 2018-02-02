@@ -1,0 +1,177 @@
+@import url(https://fonts.googleapis.com/css?family=Actor);
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600);
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+@import url(https://fonts.googleapis.com/css?family=Sunshiney);
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+body {
+  font-family: 'Lato';
+  font-size: 3.0em !important;
+  font-weight: 550;
+  color: #484878
+}
+h1, h2, h3 {
+  font-family: 'Sunshiney';
+  font-weight: 550;
+  margin-bottom: 0;
+}
+h1 {
+  color: #609048;
+}
+h3 {
+  font-family: 'Lato';
+}
+.remark-slide-content { font-size: 24px; }
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 1.9em; }
+.remark-slide-content h3 { font-size: 1.5em; }
+.footnote {
+  position: absolute;
+  bottom: 3em;
+  font-style: italic;
+  font-size: 70%;
+  color: #609048;
+}
+li { line-height: 1.85em; }
+li p { line-height: 1.25em; }
+li {
+  list-style-type: none;
+}
+ul li:before {
+  content: "\f080";
+  font-family: "FontAwesome";
+  margin-right: 10px;
+  color: #f0a800;
+}
+ul li li:before {
+  content: "\f200";
+  font-family: "FontAwesome";
+  margin-right: 10px;
+  color: #c03018;
+}
+.red { color: #d23c1e; }
+.orange { color: #c47000; }
+.blue { color: #1c54a8; }
+.large { font-size: 2em; }
+.medium { font-size: 1.5em; }
+a, a > code {
+  text-decoration: none;
+  color: #c03018;
+}
+code {
+  border-radius: 5px;
+}
+.remark-code, .remark-inline-code { font-family: 'Source Code Pro'; font-size: 80%; }
+/* .remark-code-line-highlighted     { background-color: #ffffb3; } */
+.pull-left {
+  float: left;
+  width: 47%;
+}
+.pull-right {
+  float: right;
+  width: 47%;
+}
+.pull-right ~ p {
+  clear: both;
+}
+#slideshow .slide .content code {
+  font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+  font-size: 0.9em;
+  padding: 15px;
+}
+.inverse {
+  background: \url("img/lorikeets.png");
+  /* background: rgb(18, 11, 49); */
+  color: rgb(182, 136, 48);
+  text-shadow: 0 0 0 #333;
+}
+.inverse h1, .inverse h2 {
+  color: #484878;
+  font-size: 3.0em;
+  line-height: 1.2em;
+}
+.inverse h2 {
+  color: #484878;
+  font-size: 1.5em;
+  line-height: 1.2em;
+}
+.inverse h3 {
+  color: #609048;
+  font-size: 1.5em;
+  line-height: 0.5em;
+}
+/* Slide-specific styling */
+#slide-inverse .footnote {
+  bottom: 12px;
+  left: 20px;
+}
+#slide-how .slides {
+  font-size: 0.9em;
+  position: absolute;
+  top:  151px;
+  right: 140px;
+}
+#slide-how .slides h3 {
+  margin-top: 0.2em;
+}
+#slide-how .slides .first, #slide-how .slides .second {
+  padding: 1px 20px;
+  height: 90px;
+  width: 120px;
+  -moz-box-shadow: 0 0 10px #777;
+  -webkit-box-shadow: 0 0 10px #777;
+  box-shadow: 0 0 10px #777;
+}
+#slide-how .slides .first {
+  background: #fff;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  z-index: 1;
+}
+#slide-how .slides .second {
+  position: relative;
+  background: #fff;
+  z-index: 0;
+}
+
+/* Two-column layout */
+.left-column {
+  color: #a8c018;
+  font-size: 0.9em;
+  width: 20%;
+  height: 100%;
+  float: left;
+  background-image: url("img/lorikeets_strip.png");
+  padding-left: 1em;
+  padding-top: 1em;
+}
+.left-column h3 {
+    color: #a8c018;
+    font-size: 0.9em;
+}
+.left-column h3:last-of-type, .left-column h3:last-child {
+    color: #609048;
+    font-size: 0.9em;
+}
+.left-column h2 {
+    color: #609048;
+    font-size: 1.0em;
+}
+.left-column h1 {
+     font-size: 1.9em;
+}
+.right-column {
+  color: #484878;
+  width: 75%;
+  float: right;
+  padding-top: 1em;
+}
+.right-column h1 {
+  color: #609048;
+}
+.MathJax { font-size: 1.3em !important;}

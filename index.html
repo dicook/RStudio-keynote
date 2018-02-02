@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><i class="fa  fa-rocket "></i> To the Tidyverse and Beyond: Challenges for the Future in Data Science</title>
+    <meta charset="utf-8">
+    <meta name="author" content="   Di Cook    Monash University" />
+    <link href="index_files/remark-css/example.css" rel="stylesheet" />
+    <link href="index_files/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="myremark.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <i class="fa  fa-rocket "></i> To the Tidyverse and Beyond: Challenges for the Future in Data Science
+### <br><br> Di Cook <br><br> Monash University
+### <a href="bit.ly/rstudio-cook" class="uri">bit.ly/rstudio-cook</a> <br><br> <br><br>Feb 2, 2018
+
+---
+
+
+class: inverse middle center
+
+
+
+background-image: url(title.png)
+background-size: 100%
+
+Source: 
+
+---
+class: middle center
+
+# Who uses the tidyverse?
+
+![](img/tidyverse.png)
+
+.medium[Tell us why [bit.ly/rstudio-tidyverse](https://public.etherpad-mozilla.org/p/RStudio-tidyverse)]
+
+---
+
+.left-column[
+&lt;img src="img/ggplot.png" align="left"&gt;
+
+]
+.right-column[
+
+# Reported reasons 
+
+Automatic legends, colors, …
+
+The “default” output is much nicer than with base graphics
+
+Combine multiple data sets into a single graph with a snap-together
+
+easy facetting ++
+
+Store any ggplot2 object for modification or future recall.
+
+https://github.com/tidyverse/ggplot2/wiki/Why-use-ggplot2
+
+]
+
+
+---
+
+# My reasons
+
+.medium[It is also better from a statistics perspective. The grammar of graphics provides a tight connection between data and statistics, in order to do inference with data plots.]
+
+---
+
+# Outline
+
+- How statistics builds on the tidyverse
+- Why we need inference
+- Some examples
+- How do you play with these ideas
+- The connection with interactive graphics
+- Acknowledgements and references
+
+---
+class: middle center
+
+# Tidy data
+
+1. Each variable is in a column
+2. Each observation is a row
+3. Each value is a cell
+
+&lt;!--
+&lt;img src="http://files.explosm.net/comics/Rob/statistics.png"&gt;
+
+![](img/calvin-new.jpg)
+
+Calvin: *"I'm filling out a reader survey for chewing gum"*
+
+Calvin: *"See, they asked how much I spend on gum per week, so I wrote `$500`. For my age I wrote `43`. And when they asked what my favorite flavor is, I wrote `garlic/curry`."*
+
+Hobbes: *"This magazine should have some interesting ads soon."*
+
+Calvin: *"I love messing with data."*
+--&gt;
+
+---
+class: middle center
+
+.medium[**Open up an intro statistics textbook...**]
+
+---
+
+class: middle center
+
+background-image: url(img/intro-stats.png)
+background-size: 100%
+
+---
+
+class: middle center
+
+.medium[**...and you will find that statistics starts once you have tidy data.**]
+
+---
+
+class: middle center
+
+background-image: url(img/messy_to_tidy1.png)
+background-size: 100%
+
+.footnote[Example from Hadley Wickham's workshops]
+---
+
+class: middle center
+
+background-image: url(img/messy_to_tidy2.png)
+background-size: 100%
+
+---
+
+class: middle center
+
+background-image: url(img/messy_to_tidy3.png)
+background-size: 100%
+
+---
+# A statistic is a function of the data
+
+For example, the sample mean,
+
+`$$\bar{X}=\frac{1}{n}\sum_{i=1}^{n} X_i$$` 
+
+and standard deviation,
+
+`$$s_{X}=\sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar{X})^2}$$`
+
+---
+class: middle center
+
+# This is what I really like about ggplot2, it makes plots another type of statistic.
+
+---
+
+
+
+
+
+```r
+tidy_data %&gt;% 
+  filter(iso2 == "US") %&gt;% 
+  ggplot(aes(x = year, y = count, fill = gender)) +
+  geom_bar(stat = "identity", position = "fill") +
+  facet_grid(~ age) +
+  scale_fill_manual("",
+                    values=c(ochre_palettes$lorikeet[1],
+                            ochre_palettes$lorikeet[2])) 
+```
+
+&lt;img src="figure/unnamed-chunk-2-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+tidy_data %&gt;% 
+  filter(iso2 == "US") %&gt;% 
+  ggplot(aes(x = year, y = count, fill = gender)) +
+  geom_bar(stat = "identity") +
+  facet_grid(~ age) +
+  scale_fill_manual("", 
+                    values=c(ochre_palettes$lorikeet[1],
+                            ochre_palettes$lorikeet[2])) 
+```
+
+&lt;img src="figure/unnamed-chunk-3-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+tidy_data %&gt;% 
+  filter(iso2 == "US") %&gt;% 
+  ggplot(aes(x = year, y = count, fill = gender)) +
+  geom_bar(stat = "identity", position="dodge") +
+  facet_grid(~ age) +
+  scale_fill_manual("", 
+                    values=c(ochre_palettes$lorikeet[1],
+                            ochre_palettes$lorikeet[2])) 
+```
+
+&lt;img src="figure/unnamed-chunk-4-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+tidy_data %&gt;% 
+  filter(iso2 == "US") %&gt;% 
+  ggplot(aes(x = year, y = count, fill = gender)) +
+  geom_bar(stat = "identity") +
+  facet_grid(gender ~ age) +
+  scale_fill_manual("",
+                  values=c(ochre_palettes$lorikeet[1],
+                          ochre_palettes$lorikeet[2])) 
+```
+
+&lt;img src="figure/unnamed-chunk-5-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+tidy_data %&gt;% 
+  filter(iso2 == "US") %&gt;% 
+  ggplot(aes(x = year, y = count, fill = gender)) +
+  geom_bar(stat = "identity") +
+  facet_grid(gender ~ age) +
+  scale_fill_manual("",
+                values=c(ochre_palettes$lorikeet[1],
+                         ochre_palettes$lorikeet[2])) + 
+  coord_polar()
+```
+
+&lt;img src="figure/unnamed-chunk-6-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+tidy_data %&gt;% 
+  filter(iso2 == "US") %&gt;% 
+  ggplot(aes(x = year, y = count, fill = gender)) +
+  geom_bar(stat = "identity") +
+  facet_grid(gender ~ age) +
+  scale_fill_manual("", 
+                    values=c(ochre_palettes$lorikeet[1],
+                          ochre_palettes$lorikeet[2])) + 
+  coord_polar()
+```
+
+&lt;img src="figure/unnamed-chunk-7-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+tidy_data %&gt;% 
+  filter(iso2 == "US") %&gt;% 
+  ggplot(aes(x = 1, y = count, fill = factor(year))) +
+  geom_bar(stat = "identity", position="fill") +
+  facet_grid(gender ~ age) +
+  scale_fill_ochre("year", palette="lorikeet") +
+  theme(legend.position="bottom") 
+```
+
+&lt;img src="figure/unnamed-chunk-8-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+tidy_data %&gt;% 
+  filter(iso2 == "US") %&gt;% 
+  ggplot(aes(x = 1, y = count, fill = factor(year))) +
+  geom_bar(stat = "identity", position="fill") +
+  facet_grid(gender ~ age) +
+  scale_fill_ochre("year", palette="lorikeet") +
+  coord_polar(theta="y") + theme(legend.position="bottom")
+```
+
+&lt;img src="figure/unnamed-chunk-9-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="https://www.wired.com/wp-content/uploads/2016/01/DB-Transformation-Colour.gif" width="600px" align="middle"&gt;
+
+.footnote[Source: https://www.wired.com/wp-content/uploads/2016/01/DB-Transformation-Colour.gif]
+
+---
+class: middle center
+
+# Now we can start doing statistics with plots, actually statistical inference
+
+---
+
+# Population and sample
+
+Inference happens when you have information on a .orange[subset of data], and you want to make statements about the .orange[full set]. Typically, inference is done using the .orange[sample statistics], and what we know about the .orange[behaviour of that statistic] over all possible subsets, of the same size.
+
+![](img/population.png)
+
+---
+
+# Population and sample
+
+Inference happens when you have information on a .orange[subset of data], and you want to make statements about the .orange[full set]. Typically, inference is done using the .orange[sample statistics], and what we know about the .orange[behaviour of that statistic] over all possible subsets, of the same size.
+
+![](img/sample1.png)
+
+One sample
+
+---
+
+# Population and sample
+
+Inference happens when you have information on a .orange[subset of data], and you want to make statements about the .orange[full set]. Typically, inference is done using the .orange[sample statistics], and what we know about the .orange[behaviour of that statistic] over all possible subsets, of the same size.
+
+![](img/sample2.png)
+
+Sample again
+
+---
+# Population parameters
+
+If we assume that the .orange[population can be described by a distribution], characterized by parameters such as the population mean, `\(\mu\)`
+
+and standard deviation, `\(\sigma\)`, e.g. the bell curve,
+
+`$$N(\mu, \sigma)$$`
+
+then the sample statistic behaves nicely, close to the population mean, and closer still when the sample size, `\(n\)` is large. This is parametric statistics. 
+
+
+---
+# Non-parametric
+
+If we .orange[don't want to assume the population has a known distribution], but we'd still like to be able to say something about the population based on the sample at hand, we can use methods like .orange[**bootstrap**] to sample the sample with replacement, or .orange[**permutation**] to break associations between variables. 
+
+The behaviour of the statistic over the bootstrap samples can give us information about the analogous population quantity. And the behaviour of the statistic over permutations shows us what we might expect if there really is no association. 
+
+
+---
+class: middle center
+
+# For plots, we can .orange[compare the data plot] with .orange[null plots] of samples where, by construction, there really is nothing going on. 
+
+---
+class: middle center
+
+.medium[**Why do we need inference?**]
+
+---
+
+class: middle center
+
+background-image: url(img/drob_twitter.png)
+background-size: 60%
+
+---
+# Followed by 
+
+*Below is a simple scatterplot of the two variables of interest. A slight negative slope is observed, but it does not look very large. There are a lot of states whose capitals are less than 5% of the total population. The two outliers are Hawaii (government rank 33 and capital population 25%) and Arizona (government rank 26 and capital population 23%). Without those two the downward trend (an improvement in ranking) would be much stronger.*
+
+*I ran linear regressions of government rank on the percentage of each state’s population living in the capital city, state population (in 100,000s), and state GDP (in $100,000s).... The .orange[coefficient is not significant] for any regression at the traditional 5% level.*
+
+*... .orange[I'm not convinced that the lack of significance is itself significant.]*
+
+.footnote[Analysis in Tick Tock blog, by Graham Tierney.]
+
+---
+class: middle center
+
+.medium[Because we make inference with plots anyway, without a firm foundation.]
+
+---
+class: middle center
+
+.medium[Let's do some inference....]
+
+# Which one of the following plots shows the strongest relationship between the two variables?
+
+---
+
+class: middle center
+
+background-image: url(img/govt_lineup.png)
+background-size: 80%
+
+---
+class: middle center
+
+.medium[**Why do we need inference?**]
+
+.footnote[plot number 12]
+
+---
+class: middle center
+
+.medium["Spatiotemporal statistics is what happens after all the interesting stuff is done."]
+
+.pull-right[&lt;img src="img/heike.png"&gt;]
+
+.footnote[Heike Hofmann, Statistics, Iowa State University]
+
+---
+
+class: middle center
+
+.medium[**Because then we can make discoveries with graphics and confidently crow about them.**]
+
+
+---
+
+.left-column[
+# Visual inference &lt;br&gt; protocols
+]
+.right-column[
+- **Rorschach protocol**: Before looking at the data, plot a lot of null samples, to get a sense for what might be seen when there really is nothing to be seen.
+- **Lineup protocol**: Embed the plot of the data among a field of plots of null samples. Ask someone who's not related to you, to pick the one that's different. If they pick the data plot, this is evidence for the data to have structure that is significantly different from what might be expected by chance.
+]
+
+---
+.left-column[
+# How do you generate null samples?
+]
+.right-column[
+- **Permutation**: Take one of the variables of interest (one columnm of tidy data) and scramble the order. This breaks any association with other variables. 
+- **Simulation**: Assume that a variable has values that follow a given statistical distribution. Sample values from this distribution.
+]
+
+---
+class: middle center
+
+# Putting this all together
+
+---
+
+.left-column[
+# When you make a plot of data
+]
+.right-column[
+# think about...
+- What is the .orange[question] you are trying the answer from the plot, hence explicitly stating the .orange[null hypothesis and alternative]. 
+- How .orange[variables] are mapped to graphical elements.
+- What a .orange[null generating mechanism] could be, that woud ensure samples are drawn from a null scenario, of nothing to be seen.
+- What are possible .orange[alternative plot designs].
+]
+
+---
+
+# Worked examples
+
+- good government
+- cancer map
+- flying etiquette
+
+---
+
+.pull-left[
+&lt;img src="img/drob_twitter.png" width="100%"&gt;
+]
+.pull-right[
+- **Question**: Is good government related to population centres?
+    - **Null**: Nope
+    - **Alternative**: Yes
+- Variables mapped to graphical elements
+    - x=%Pop, y=Rank, geom=point
+    - ......., geom=smooth/lm, se
+- Null generating method:
+    - Permute x, resulting in *no real association*
+- Alternatives: 
+    - log the %Pop values
+    - No lm, no se
+]
+
+---
+class: middle center
+
+background-image: url(img/govt_lineup.png)
+background-size: 80%
+
+---
+
+.pull-left[
+&lt;img src="figure/unnamed-chunk-10-1.svg" style="display: block; margin: auto;" /&gt;
+Cancer incidence across the US 2010-2014, all cancer types, per 100k.
+
+.footnote[Data from American Cancer Society, https://cancerstatisticscenter.cancer.org]
+]
+.pull-right[
+
+- **Question**: Is there spatial dependency?
+    - Null: Nope
+    - Alternative: Yep
+- Variables mapped to graphical elements
+    - x=long, y=lat, geom=map/polygon
+    - color=Incidence
+- Null generating method:
+    - Permute Incidence, breaks any spatial dependence
+
+]
+
+---
+class: middle center
+
+# Melanoma
+
+a .orange[different cancer] from what we just looked at, because once you've seen the data its .orange[hard to "unsee it"]
+
+---
+
+&lt;img src="figure/unnamed-chunk-11-1.svg" style="display: block; margin: auto;" /&gt;
+
+
+
+
+---
+class: middle center 
+
+[41% Of Fliers Think You’re Rude If You Recline Your Seat](http://fivethirtyeight.com/datalab/airplane-etiquette-recline-seat/)
+
+FiveThirtyEight article by Walt Hickey, Sep 2014
+
+---
+
+&lt;img src="figure/unnamed-chunk-13-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+background-image: url(img/hyptesting.pdf)
+background-size: 90%
+
+
+---
+class: center middle
+
+# Interesting tidbit
+
+The first lineup was done by Neyman, Scott and Shane (1953) to examine the universe .orange["If one actually distributed the cluster centres in space and then
+placed the galaxies in the clusters exactly as prescribed by the
+model, would the resulting picture on the photographic plate look
+anything like that on an actual plate...?"]
+
+.footnote[The hard work was of course done by .orange[Computers], consisting of an office with three female assistants whose work was acknowledged as requiring ``a tremendous amount of care and attention.]
+---
+
+# p-values 
+
+The *p*-value is the probability that the data plot is extreme, if there really is no structure in the population. **The lower the better!**
+
+
+```r
+library(nullabor)
+data(turk_results)
+turk_results %&gt;% filter(pic_id == "105") %&gt;% count(detected)
+```
+
+```
+#&gt; # A tibble: 2 x 2
+#&gt;   detected     n
+#&gt;      &lt;int&gt; &lt;int&gt;
+#&gt; 1        0     4
+#&gt; 2        1    13
+```
+
+```r
+pvisual(13, 17)
+```
+
+```
+#&gt;       x simulated        binom
+#&gt; [1,] 13         0 2.398082e-14
+```
+
+---
+
+# p-values 
+
+
+```r
+turk_results %&gt;% filter(pic_id == "116") %&gt;% count(detected)
+```
+
+```
+#&gt; # A tibble: 2 x 2
+#&gt;   detected     n
+#&gt;      &lt;int&gt; &lt;int&gt;
+#&gt; 1        0    14
+#&gt; 2        1     2
+```
+
+```r
+pvisual(2, 16)
+```
+
+```
+#&gt;      x simulated     binom
+#&gt; [1,] 2    0.2056 0.1892403
+```
+
+---
+# Our trial
+
+.pull-left[
+&lt;img src="figure/unnamed-chunk-16-1.svg" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+
+```r
+pvisual(20, 50)
+```
+
+```
+#&gt;       x simulated        binom
+#&gt; [1,] 20         0 1.042499e-13
+```
+]
+
+.footnote[run directly in R]
+---
+# ...and power
+
+Power is the probability that the data plot is detected when there really is some structure in the population. **The higher the better!**
+
+
+```r
+visual_power(turk_results)
+```
+
+```
+#&gt; # A tibble: 6 x 3
+#&gt;   pic_id power     n
+#&gt;    &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
+#&gt; 1     36 0        18
+#&gt; 2    105 0.746    17
+#&gt; 3    116 0.125    16
+#&gt; 4    131 0.842    14
+#&gt; 5    159 0.656    15
+#&gt; 6    225 0.130    15
+```
+
+---
+
+.pull-left[
+&lt;img src="figure/unnamed-chunk-19-1.svg" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="figure/unnamed-chunk-20-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+Best design to answer this question: "Do males and females perceive the etiquette of bringing a baby on board differently?"
+
+.footnote[Hofmann et al (2012) InfoVis]
+
+---
+
+.pull-left[
+&lt;img src="img/hyptesting2.pdf"&gt;
+]
+.pull-right[
+Hypothesis testing provides rigor to data analysis. Its very important to do it rigorously. 
+
+.orange[**The hypothesis for data plots comes from the type of plot being used.**] 
+
+When you add the data to the plot, it becomes a test statistic. Hypotheses never come from looking at the data first, but from the underlying problem to be solved.
+]
+
+---
+# The nullabor package
+
+
+```r
+fly_sub_lineup &lt;- lineup(
+  null_dist(var="gender", dist="binomial", 
+             params=list(p=0.533, n=809, size=1)), 
+  fly_sub, n=12)
+```
+
+```
+#&gt; decrypt("lsQR SKiK fq Ic6fifcq w")
+```
+
+.footnote[https://github.com/dicook/nullabor]
+
+---
+background-image: url(img/andreas.png)
+background-size: 70%
+
+# Inference and interactive graphics
+
+.pull-left[The 1980s dataviewer interactive graphics software by Buja, Hurley, Stuetzle, McDonald
+
+http://stat-graphics.org/movies/dataviewer.html
+
+had tools to compare data plots with null plots!
+
+]
+
+---
+class: center middle
+
+But equally important, the interactive graphics system was built on a .orange[data pipeline] in which the data played the central engine.
+
+&lt;img src="img/pipeline.png" width="700px"&gt;
+
+.footnote[Xie et al (2014) Statistical Science]
+---
+# Summary
+
+- Tidy data provides the glue from raw data to the data in the statistics textbooks 
+    - it fills that vast chasm that has existed and exasperated for eons.
+    - No longer do statisticians have to request the clean tabular format csv file before they can get started
+    
+---
+# Summary
+    
+- The grammar of graphics provides the functional mapping of variable to plot element that makes data plots become statistics that we can do inference on
+    - Visual inference protocol gives some teeth to the discoveries 
+    - ... and helps to avoid apophenia
+    - Prevents *p*-hacking and supports practical significance
+- Think about interactive graphics and inference procedures as part of the data pipeline
+
+---
+
+class: inverse 
+
+# Joint work!
+
+- Inference: Andreas Buja, Heike Hofmann, Mahbub Majumder, Hadley Wickham, Eric Hare, Susan Vanderplas, Niladri Roy Chowdhury, Nat Tomasetti.
+- Interactive graphics: Debby Swayne, Andreas Buja, Duncan Temple Lang, Heike Hofmann, Michael Lawrence, Hadley Wickham, Yihui Xie, Xiaoyue Cheng.
+
+Contact: [<i class="fa  fa-envelope "></i>]() dicook@monash.edu, [<i class="fa  fa-twitter "></i>]() visnut, [<i class="fa  fa-github "></i>]() dicook
+
+.footnote[Slides made with Rmarkdown, xaringan package by Yihui Xie, and lorikeet theme using the [ochRe package](https://github.com/ropenscilabs/ochRe). Available at [github.com/dicook/RStudio-keynote](github.com/dicook/RStudio-keynote].)
+
+---
+# Further reading
+
+- Inference
+    - Buja et al (2009) Statistical Inference for Exploratory Data Analysis and Model Diagnostics, Roy. Soc. Ph. Tr., A
+    - Majumder et al (2013) Validation of Visual Statistical Inference, Applied to Linear Models, JASA
+    - Wickham et al (2010) Graphical Inference for Infovis, InfoVis, Best paper
+    - Hofmann et al (2012) Graphical Tests for Power Comparison of Competing Design, InfoVis
+    
+---
+
+- Interactive graphics
+    - Buja et al (1987) Elements of a Viewing Data Pipeline for Data Analysis and  [Dataviewer](http://stat-graphics.org/movies/dataviewer.html)
+    - Cook and Swayne (2007) [Interactive and Dynamic Graphics for Data Analysis](ggobi.org)
+    - Wickham et al (2009?) [The plumbing of interactive graphics
+](http://vita.had.co.nz/papers/plumbing.pdf)
+    - Xie et al (2014) Reactive Programming for Interactive Graphics, Statistical Science
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
